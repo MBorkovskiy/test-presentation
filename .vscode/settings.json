@@ -1,0 +1,23 @@
+{
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "always",
+		"source.fixAll.stylelint": "always",
+		"sourse.fixAll.prettier": "always"
+	},
+	"prettier.enable": true,
+	"eslint.enable": true,
+	"stylelint.enable": true,
+	"files.eol": "\n",
+	"eslint.useFlatConfig": true,
+	"editor.insertSpaces": false,
+	"editor.tabSize": 4,
+	"vs-code-prettier-eslint.prettierLast": true,
+	"cSpell.words": ["collumn"],
+	"editor.quickSuggestions": {
+		"other": "on", // Это значение по умолчанию может быть "offWhenInlineCompletions", что и вызывает проблему
+		"comments": "off",
+		"strings": "on"
+	}
+}
