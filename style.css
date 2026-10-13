@@ -11,7 +11,8 @@
       .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
 
       /* Слайды на всё окно */
-      .remark-slide-scaler { box-shadow: none; }
+      .remark-slide-scaler { box-shadow: none ;width: 100% !important;height: 100% !important;transform: none !important;left: auto !important;top: auto !important; }
+
       .remark-slide { overflow: hidden; }
 
       /* ===== Анимации переходов между слайдами ===== */
@@ -56,6 +57,7 @@
         .remark-slide-container.remark-visible .remark-slide,
         .remark-slide-container.remark-visible .remark-slide-content > * { animation: none; }
       }
+     
 
       /* ===== Slides from seneshal1 ===== */
       .remark-slide-content {
@@ -130,6 +132,11 @@
         font-family: 'Montserrat', Arial, sans-serif;
         background: #fbf9f8;
         color: #2b2b2b;
+        display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
       }
       .contents .eyebrow {
         font-size: 11px;
@@ -247,6 +254,11 @@
         font-weight: 300;
         background: var(--tbg);
         color: var(--tfg);
+        display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
       }
       .full .eyebrow {
         font-size: 11px;
@@ -268,6 +280,7 @@
       /* Карточки */
       .cards4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 26px; }
       .cards3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 26px; }
+    
       .card { border: 1px solid var(--tline); background: rgba(255,255,255,.55); padding: 18px 16px; }
       .card .n { font-family: 'Cormorant', Georgia, serif; font-size: 36px; color: var(--acc); line-height: 1; }
       .card h3 { font-family: 'Cormorant', Georgia, serif; font-weight: 500; font-size: 20px; color: var(--thead); margin: 8px 0; }
@@ -359,6 +372,7 @@
         font-weight: 300;
         
       }
+      .remark-slide-content{padding: 0;}
       .remark-slide-content.contacts::before {
         content: "";
         position: absolute;
@@ -373,3 +387,55 @@
       .people p { font-size: 13px; color: var(--beige); margin: 6px 0 0; }
       .contacts .site { margin-top: 34px; font-size: 14px; letter-spacing: .1em; color: var(--beige); }
       .contacts .legal { margin: 30px auto 0; font-size: 8.5px; line-height: 1.6; color: rgba(227,222,216,.45); max-width: 820px; }
+
+         @media (max-width: 768px) {
+          .cover .brand{
+            font-size: 42px;
+          }
+          .cover .title{
+            font-size: 26px;
+          }
+          
+    .cards3 {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .people {
+        grid-template-columns: auto;
+    }
+    .remark-slide-content.split {
+        grid-template-columns: auto;
+    }
+    .split .text{
+      padding-block: 0;
+    }
+    .cols3 {
+        grid-template-columns: 1fr ;
+        padding-block: 0;
+        
+    }
+    .remark-slide-content{padding-inline: 8px;}
+    .remark-slide-content.full{
+      padding-block: 4px;
+    }
+    .kpis{
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .kpil b{
+      font-size: 16px;
+    }
+    .kpil li{
+      padding: 0;
+    }
+    ul.fine li{
+      padding: 0;
+    }
+    .cards4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .contents .toc{
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .timeline {
+      grid-template-columns: 1fr;
+    }
+}
