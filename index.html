@@ -12,9 +12,52 @@
       }
       .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
 
-      /* Слайды на всё окно
+      /* Слайды на всё окно */
       .remark-slide-scaler { box-shadow: none; }
-      .remark-slide { overflow: hidden; } */
+      .remark-slide { overflow: hidden; }
+
+      /* ===== Анимации переходов между слайдами ===== */
+      @keyframes remark-fade-in { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes remark-zoom-in { from { opacity: .2; transform: scale(1.015); } to { opacity: 1; transform: none; } }
+      @keyframes remark-rise-in { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+
+      .remark-slide-container {
+        opacity: 0;
+        transition: opacity .45s ease;
+      }
+      .remark-slide-container.remark-visible { opacity: 1; }
+      .remark-slide-container.remark-fading { opacity: 0; transition: opacity .45s ease; }
+
+      /* Содержимое слайда плавно «приближается» */
+      .remark-slide-container.remark-visible .remark-slide {
+        animation: remark-zoom-in .6s ease both;
+      }
+
+      /* Блоки внутри слайда появляются каскадом */
+      .remark-slide-container.remark-visible .remark-slide-content > * {
+        animation: remark-rise-in .55s cubic-bezier(.2,.7,.2,1) both;
+      }
+      .remark-slide-container.remark-visible .remark-slide-content > *:nth-child(1) { animation-delay: .08s; }
+      .remark-slide-container.remark-visible .remark-slide-content > *:nth-child(2) { animation-delay: .18s; }
+      .remark-slide-container.remark-visible .remark-slide-content > *:nth-child(3) { animation-delay: .28s; }
+      .remark-slide-container.remark-visible .remark-slide-content > *:nth-child(4) { animation-delay: .38s; }
+      .remark-slide-container.remark-visible .remark-slide-content > *:nth-child(5) { animation-delay: .48s; }
+      .remark-slide-container.remark-visible .remark-slide-content > *:nth-child(6) { animation-delay: .58s; }
+      .remark-slide-container.remark-visible .remark-slide-content > *:nth-child(n+7) { animation-delay: .65s; }
+
+      /* В сплит-слайдах фото и текст появляются по-разному */
+      .remark-slide-container.remark-visible .remark-slide-content.split > .photo {
+        animation-name: remark-fade-in;
+      }
+      .remark-slide-container.remark-visible .remark-slide-content.split > .text {
+        animation: remark-rise-in .6s cubic-bezier(.2,.7,.2,1) .15s both;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .remark-slide-container { transition: none; opacity: 1; }
+        .remark-slide-container.remark-visible .remark-slide,
+        .remark-slide-container.remark-visible .remark-slide-content > * { animation: none; }
+      }
 
       /* ===== Slides from seneshal1 ===== */
       .remark-slide-content {
@@ -1090,7 +1133,7 @@ background-image: url(https://monargixx.github.io/seneshal1/img/pirs.jpg)
     <script type="text/javascript">
          var slideshow = remark.create({ratio:'16:9'});
     
-      fillWindow();
+      
     </script>
   </body>
 </html>
