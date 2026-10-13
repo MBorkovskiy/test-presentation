@@ -863,6 +863,12 @@ ul.fine li:before {
 	.cols3 {
 		grid-template-columns: 1fr;
 		padding-block: 0;
+		margin-top: 8px;
+		gap: 12px;
+	}
+	.cols3 h4 {
+		margin: 0;
+		padding: 0;
 	}
 
 	.remark-slide-content {
@@ -870,6 +876,9 @@ ul.fine li:before {
 	}
 	.remark-slide-content.full {
 		padding-block: 4px;
+	}
+	.kpi {
+		padding: 6px;
 	}
 	.kpis {
 		grid-template-columns: repeat(2, 1fr);
@@ -881,7 +890,8 @@ ul.fine li:before {
 		padding: 0;
 	}
 	ul.fine li {
-		padding: 0;
+		padding: 2px 0 2px 20px !important;
+		font-size: 12px;
 	}
 	.cards4 {
 		grid-template-columns: repeat(2, 1fr);
@@ -889,6 +899,38 @@ ul.fine li:before {
 	.contents .toc {
 		grid-template-columns: repeat(2, 1fr);
 	}
+	.contents h2 {
+		font-size: 26px;
+	}
+	.split h2 {
+		font-size: 26px;
+		margin: 0;
+	}
+
+	.split .lead {
+		margin: 0;
+		line-height: 1.1;
+	}
+
+	.sw {
+		text-align: left;
+	}
+
+	.sw i {
+		width: 24px;
+		height: 24px;
+	}
+
+	.full h2.big {
+		font-size: 26px;
+	}
+	.card {
+		padding: 6px;
+	}
+	.step {
+		padding: 2px 0;
+	}
+
 	.timeline {
 		grid-template-columns: 1fr;
 	}
