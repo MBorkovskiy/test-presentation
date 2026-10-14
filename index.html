@@ -764,6 +764,63 @@ background-image: url(https://monargixx.github.io/seneshal1/img/pirs.jpg)
 		></script>
 		<script type="text/javascript">
 			var slideshow = remark.create({ ratio: '16:9', touch: false });
+
+			// Свой обработчик: только вертикальные свайпы
+			(function () {
+				var startY = null,
+					startX = null;
+				var THRESHOLD = 40; // px по вертикали — минимум для свайпа
+				var TAP_RADIUS = 10; // px по обеим осям — это тап
+
+				document.addEventListener(
+					'touchstart',
+					function (e) {
+						var t = e.touches[0];
+						startY = t.clientY;
+						startX = t.clientX;
+					},
+					{ passive: false }
+				);
+
+				document.addEventListener(
+					'touchmove',
+					function (e) {
+						if (
+							startY !== null &&
+							Math.abs(e.touches[0].clientY - startY) > TAP_RADIUS
+						) {
+							e.preventDefault(); // гасим прокрутку страницы, пока жест наш
+						}
+					},
+					{ passive: false }
+				);
+
+				document.addEventListener(
+					'touchend',
+					function (e) {
+						if (startY === null) return;
+						var t = e.changedTouches[0];
+						var dy = t.clientY - startY;
+						var dx = t.clientX - startX;
+						startY = null;
+
+						// Тап — оставляем навигацию по половинам экрана (как в оригинальном remark)
+						if (Math.abs(dy) < TAP_RADIUS && Math.abs(dx) < TAP_RADIUS) {
+							if (e.target.nodeName.toUpperCase() === 'A') return;
+							if (t.clientX < document.documentElement.clientWidth / 2)
+								slideshow.gotoPreviousSlide();
+							else slideshow.gotoNextSlide();
+							return;
+						}
+
+						// Свайп засчитываем только если ось вертикальная и достаточно длинная
+						if (Math.abs(dy) < THRESHOLD || Math.abs(dy) < Math.abs(dx)) return;
+						if (dy < 0) slideshow.gotoNextSlide();
+						else slideshow.gotoPreviousSlide();
+					},
+					{ passive: false }
+				);
+			})();
 		</script>
 	</body>
 </html>
