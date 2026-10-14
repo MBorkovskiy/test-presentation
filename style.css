@@ -3,6 +3,31 @@
 @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
 @import url(https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500&display=swap);
 
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	scroll-snap-type: y mandatory;
+	scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+	display: none;
+}
+
+html,
+body {
+	height: 100%;
+	margin: 0;
+	overscroll-behavior: none;
+}
+
+@page {
+	margin: 0;
+}
+
 body {
 	font-family: 'Droid Serif';
 }
@@ -12,32 +37,23 @@ h3 {
 	font-family: 'Yanone Kaffeesatz';
 	font-weight: normal;
 }
-.remark-code,
-.remark-inline-code {
+code,
+pre {
 	font-family: 'Ubuntu Mono';
 }
-html.remark-container,
-body.remark-container {
-	touch-action: none;
-	overscroll-behavior: none;
-}
 
-/* Слайды на всё окно */
-.remark-slide-scaler {
-	box-shadow: none;
-	width: 100% !important;
-	height: 100% !important;
-	transform: none !important;
-	left: auto !important;
-	top: auto !important;
-}
-
-.remark-slide {
+/* Каждый слайд — экран на всю высоту, скролл со снапом */
+.slide {
+	position: relative;
+	display: block;
 	overflow: hidden;
+	height: 100%;
+	scroll-snap-align: start;
+	scroll-snap-stop: always;
 }
 
-/* ===== Анимации переходов между слайдами ===== */
-@keyframes remark-fade-in {
+/* ===== Анимации появления слайдов ===== */
+@keyframes slide-fade-in {
 	from {
 		opacity: 0;
 	}
@@ -45,17 +61,7 @@ body.remark-container {
 		opacity: 1;
 	}
 }
-@keyframes remark-zoom-in {
-	from {
-		opacity: 0.2;
-		transform: scale(1.015);
-	}
-	to {
-		opacity: 1;
-		transform: none;
-	}
-}
-@keyframes remark-rise-in {
+@keyframes slide-rise-in {
 	from {
 		opacity: 0;
 		transform: translateY(26px);
@@ -66,70 +72,56 @@ body.remark-container {
 	}
 }
 
-.remark-slide-container {
+/* Пока JS не подключил класс .has-js, контент виден всегда */
+.has-js .slide > * {
 	opacity: 0;
-	transition: opacity 0.45s ease;
-}
-.remark-slide-container.remark-visible {
-	opacity: 1;
-}
-.remark-slide-container.remark-fading {
-	opacity: 0;
-	transition: opacity 0.45s ease;
 }
 
-/* Содержимое слайда плавно «приближается» */
-.remark-slide-container.remark-visible .remark-slide {
-	animation: remark-zoom-in 0.6s ease both;
+/* Контент слайда появляется каскадом, когда слайд в центре экрана */
+.has-js .slide.is-visible > * {
+	animation: slide-rise-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
-
-/* Блоки внутри слайда появляются каскадом */
-.remark-slide-container.remark-visible .remark-slide-content > * {
-	animation: remark-rise-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-}
-.remark-slide-container.remark-visible .remark-slide-content > *:nth-child(1) {
+.has-js .slide.is-visible > *:nth-child(1) {
 	animation-delay: 0.08s;
 }
-.remark-slide-container.remark-visible .remark-slide-content > *:nth-child(2) {
+.has-js .slide.is-visible > *:nth-child(2) {
 	animation-delay: 0.18s;
 }
-.remark-slide-container.remark-visible .remark-slide-content > *:nth-child(3) {
+.has-js .slide.is-visible > *:nth-child(3) {
 	animation-delay: 0.28s;
 }
-.remark-slide-container.remark-visible .remark-slide-content > *:nth-child(4) {
+.has-js .slide.is-visible > *:nth-child(4) {
 	animation-delay: 0.38s;
 }
-.remark-slide-container.remark-visible .remark-slide-content > *:nth-child(5) {
+.has-js .slide.is-visible > *:nth-child(5) {
 	animation-delay: 0.48s;
 }
-.remark-slide-container.remark-visible .remark-slide-content > *:nth-child(6) {
+.has-js .slide.is-visible > *:nth-child(6) {
 	animation-delay: 0.58s;
 }
-.remark-slide-container.remark-visible .remark-slide-content > *:nth-child(n + 7) {
+.has-js .slide.is-visible > *:nth-child(n + 7) {
 	animation-delay: 0.65s;
 }
 
 /* В сплит-слайдах фото и текст появляются по-разному */
-.remark-slide-container.remark-visible .remark-slide-content.split > .photo {
-	animation-name: remark-fade-in;
+.has-js .slide.is-visible.split > .photo {
+	animation-name: slide-fade-in;
 }
-.remark-slide-container.remark-visible .remark-slide-content.split > .text {
-	animation: remark-rise-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s both;
+.has-js .slide.is-visible.split > .text {
+	animation: slide-rise-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s both;
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.remark-slide-container {
-		transition: none;
-		opacity: 1;
-	}
-	.remark-slide-container.remark-visible .remark-slide,
-	.remark-slide-container.remark-visible .remark-slide-content > * {
+	.has-js .slide > *,
+	.has-js .slide.is-visible > * {
 		animation: none;
+		opacity: 1;
+		transform: none;
 	}
 }
 
 /* ===== Slides from seneshal1 ===== */
-.remark-slide-content {
+.slide {
 	position: relative;
 	background-position: center;
 	background-size: cover;
@@ -213,7 +205,7 @@ body.remark-container {
 .cover {
 	height: 100%;
 }
-.remark-slide-content.cover {
+.slide.cover {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -221,8 +213,9 @@ body.remark-container {
 	text-align: left;
 	color: #fff;
 	font-family: 'Montserrat', Arial, sans-serif;
+	padding: 24px;
 }
-.remark-slide-content.cover::before {
+.slide.cover::before {
 	content: '';
 	position: absolute;
 	inset: 0;
@@ -233,7 +226,7 @@ body.remark-container {
 		rgba(6, 36, 74, 0.8) 100%
 	);
 }
-.remark-slide-content.cover > * {
+.slide.cover > * {
 	position: relative;
 	z-index: 1;
 }
@@ -269,7 +262,7 @@ body.remark-container {
 }
 
 /* Содержание */
-.remark-slide-content.contents {
+.slide.contents {
 	font-family: 'Montserrat', Arial, sans-serif;
 	background: #fbf9f8;
 	color: #2b2b2b;
@@ -344,13 +337,10 @@ body.remark-container {
 }
 
 /* Сплит-слайд (фото + текст) */
-.remark-slide-content.split {
+.slide.split {
 	padding: 0;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-}
-.remark-slide-number {
-	display: none;
 }
 .split {
 	height: 100%;
@@ -453,7 +443,7 @@ body.remark-container {
 }
 
 /* Полноэкранные слайды */
-.remark-slide-content.full {
+.slide.full {
 	padding: 6vh 6vw;
 	font-family: 'Montserrat', Arial, sans-serif;
 	font-weight: 300;
@@ -720,11 +710,11 @@ ul.fine li:before {
 }
 
 /* Фон с затемнением поверх */
-.remark-slide-content.hasbg > * {
+.slide.hasbg > * {
 	position: relative;
 	z-index: 1;
 }
-.remark-slide-content.hasbg::before {
+.slide.hasbg::before {
 	content: '';
 	position: absolute;
 	inset: 0;
@@ -777,7 +767,7 @@ ul.fine li:before {
 .contacts {
 	height: 100%;
 }
-.remark-slide-content.contacts {
+.slide.contacts {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -786,10 +776,10 @@ ul.fine li:before {
 	font-family: 'Montserrat', Arial, sans-serif;
 	font-weight: 300;
 }
-.remark-slide-content {
+.slide {
 	padding: 0;
 }
-.remark-slide-content.contacts::before {
+.slide.contacts::before {
 	content: '';
 	position: absolute;
 	inset: 0;
@@ -859,7 +849,7 @@ ul.fine li:before {
 	.people {
 		grid-template-columns: auto;
 	}
-	.remark-slide-content.split {
+	.slide.split {
 		grid-template-columns: auto;
 	}
 	.split .text {
@@ -876,10 +866,10 @@ ul.fine li:before {
 		padding: 0;
 	}
 
-	.remark-slide-content {
+	.slide {
 		padding-inline: 8px;
 	}
-	.remark-slide-content.full {
+	.slide.full {
 		padding-block: 4px;
 	}
 	.kpi {
